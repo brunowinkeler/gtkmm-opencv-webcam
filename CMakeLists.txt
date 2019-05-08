@@ -18,6 +18,9 @@ pkg_check_modules(GTKMM gtkmm-3.0)
 include_directories(${GTKMM_INCLUDE_DIRS})
 link_directories(${GTKMM_LIBRARY_DIRS})
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 # If on Windows, make sure all symbols are exported to create a shared lib
 if(WIN32)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)
@@ -45,3 +48,4 @@ file(GLOB TM_SOURCES
 
 add_executable(${EXEC_NAME} ${TM_SOURCES})
 target_link_libraries(${EXEC_NAME} ${GTKMM_LIBRARIES})
+target_link_libraries(${EXEC_NAME} ${OpenCV_LIBS})

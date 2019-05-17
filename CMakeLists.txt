@@ -21,6 +21,11 @@ link_directories(${GTKMM_LIBRARY_DIRS})
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
+# Define the folder of Includes, libraries and Runtime Files. (.h, .hpp, .ilk, .exe, .dll, .lib, .exp etc.)
+set(PROJECT_INCLUDES "${CMAKE_INSTALL_PREFIX}/include")
+set(PROJECT_LIBS     "${CMAKE_INSTALL_PREFIX}/lib")
+set(PROJECT_BINARIES "${CMAKE_INSTALL_PREFIX}/bin")
+
 # If on Windows, make sure all symbols are exported to create a shared lib
 if(WIN32)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)
@@ -36,16 +41,7 @@ elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif()
 
-# Collect sources and headers into the variables
-file(GLOB TM_SOURCES
-    "src/*.h"
-    "src/*.hpp"
-    "src/*.hxx"
-    "src/*.c"
-    "src/*.cpp"
-    "src/*.cxx"
-)
-
-add_executable(${EXEC_NAME} ${TM_SOURCES})
-target_link_libraries(${EXEC_NAME} ${GTKMM_LIBRARIES})
-target_link_libraries(${EXEC_NAME} ${OpenCV_LIBS})
+# Adds the respective subdirectories of the project
+add_subdirectory(src/camera_tools)
+add_subdirectory(src/image_processing)
+add_subdirectory(tests/main)

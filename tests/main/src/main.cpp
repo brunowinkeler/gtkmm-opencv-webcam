@@ -17,7 +17,8 @@ int main(int argc, char **argv)
 {
     cv::Mat frame;
 
-    frame = cv::imread("../resources/imgs/lena.png", cv::IMREAD_COLOR);
+    std::string path_resources = PATH_RESOURCES;
+    frame = cv::imread(path_resources + "imgs/lena.png", cv::IMREAD_COLOR);
     cv::namedWindow("Example", cv::WINDOW_AUTOSIZE);
     cv::imshow("Example", frame);
     cv::waitKey(0);
@@ -30,8 +31,7 @@ int main(int argc, char **argv)
 
     auto app = Gtk::Application::create(argc, argv, "org.gtkmm.examples.base");
 
-    const char *glade_filepath = "../resources/glade/glade-example.glade";
-    Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file(glade_filepath);
+    Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file(path_resources + "glade/glade-example.glade");
 
     builder->get_widget("window1", window);
     builder->get_widget("button1", buttonClose);

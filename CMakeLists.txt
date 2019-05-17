@@ -26,6 +26,12 @@ set(PROJECT_INCLUDES "${CMAKE_INSTALL_PREFIX}/include")
 set(PROJECT_LIBS     "${CMAKE_INSTALL_PREFIX}/lib")
 set(PROJECT_BINARIES "${CMAKE_INSTALL_PREFIX}/bin")
 
+# Create preprocessor definitions containing path information
+set(PATH_RESOURCES "\"${PROJECT_SOURCE_DIR}/resources/\"")
+
+# Add preprocessor definitions
+add_definitions(-DPATH_RESOURCES=${PATH_RESOURCES})
+
 # If on Windows, make sure all symbols are exported to create a shared lib
 if(WIN32)
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)

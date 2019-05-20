@@ -48,6 +48,6 @@ elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
 endif()
 
 # Adds the respective subdirectories of the project
-add_subdirectory(src/camera_tools)
+add_subdirectory(src/acquisition)
 add_subdirectory(src/image_processing)
 add_subdirectory(tests/main)

@@ -16,7 +16,7 @@ file(GLOB MODULE_SOURCES
         "${MODULE_NAME_SRCS}/src/*.cxx")
 
 # Creates shared libraries with the listed sources collected in the variables
-add_library(${MODULE_NAME} STATIC ${MODULE_SOURCES} ${MODULE_HEADERS})
+add_library(${MODULE_NAME} SHARED ${MODULE_SOURCES} ${MODULE_HEADERS})
 
 # Creates a folder "pca_probe_acquisition" and adds target project (probe_acquisition.vcproj) under it
 set_property(TARGET ${MODULE_NAME} PROPERTY FOLDER "${MODULE_NAME}")

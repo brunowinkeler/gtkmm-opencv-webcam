@@ -7,6 +7,9 @@
 *.o
 *.obj
 
+# Glade Destructors
+*.glade~
+
 # Precompiled Headers
 *.gch
 *.pch

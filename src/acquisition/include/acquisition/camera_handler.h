@@ -17,8 +17,6 @@ namespace acquisition
         cv::Mat getSingleFrame();
 
     private:
-        void thread_getCapture();
-
         cv::VideoCapture vCap;
         cv::Mat lastFrame;
         int cameraIndex = 0;

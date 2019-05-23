@@ -6,8 +6,15 @@ namespace acquisition
     {
         try
         {
-            std::lock_guard<std::mutex> lockCamera(cameraMutex);
-            vCap.open(camera_index);
+            cameraMutex.lock();
+            if(!vCap.isOpened())
+            {
+                vCap.open(camera_index);
+                vCap.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
+                vCap.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
+            }
+            cameraMutex.unlock();
+
             cameraIndex = camera_index;
         }
         catch(const std::exception& e)
@@ -16,14 +23,20 @@ namespace acquisition
         }
     }
     
-    cv::Mat CameraHandler::getSingleFrame()
-    {
-        std::lock_guard<std::mutex> lockPic(cameraMutex);
-        vCap.read(lastFrame);
-    }
-
     CameraHandler::~CameraHandler()
     {
+        if(vCap.isOpened())
+            vCap.release();
     }
-    
+
+    cv::Mat CameraHandler::getSingleFrame()
+    {
+        cameraMutex.lock();
+        if(vCap.isOpened())
+            vCap >> lastFrame;
+        cameraMutex.unlock();
+
+        return lastFrame;
+    }
+
 } // namespace acquisition

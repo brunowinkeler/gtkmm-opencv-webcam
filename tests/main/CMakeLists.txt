@@ -5,6 +5,7 @@ set(PROJECT_SRCS ${PROJECT_SOURCE_DIR}/src)
 # Include the directories that are the reference
 include_directories(${PROJECT_SRCS}/acquisition/include)
 include_directories(${PROJECT_SRCS}/image_processing/include)
+include_directories(${TESTS_SRCS}/main/include)
 
 # Collect sources and headers into the variables
 file(GLOB MAIN_HEADERS 

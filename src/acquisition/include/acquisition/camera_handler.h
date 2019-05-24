@@ -5,23 +5,29 @@
 #include <thread>
 #include <opencv2/opencv.hpp>
 
-
 namespace acquisition
 {
+    class CameraWidget;
     class CameraHandler
     {
     public:
         CameraHandler(int camera_index = 0);
         ~CameraHandler();
 
-        cv::Mat getSingleFrame();
+        void startStream(CameraWidget * caller);
+        void stopStream();
+        void getData(cv::Mat * frame);
 
-    private:
+        bool isStopped() const;
+
+    private:    
         cv::VideoCapture vCap;
-        cv::Mat lastFrame;
+        cv::Mat m_lastFrame;
         int cameraIndex = 0;
 
         std::mutex cameraMutex;
+
+        bool m_isStopped = true;
     };
     
 } // namespace acquisition

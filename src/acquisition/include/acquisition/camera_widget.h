@@ -21,11 +21,17 @@ namespace acquisition
 
         bool isPaused();
 
+        void notify();
+
     private:
         void updateWidget();
 
+        void on_notificationFromWorkerThread();
+
         Glib::RefPtr<Gtk::Builder> m_builder;
-        std::shared_ptr<CameraHandler> m_cameraHandler;
+        Glib::Dispatcher m_dispatcher;
+        std::thread * m_workerThread;
+        CameraHandler m_cameraHandler;
     };
 
 } // namespace acquisition

@@ -1,4 +1,5 @@
 #include "acquisition/camera_handler.h"
+#include "acquisition/camera_widget.h"
 
 namespace acquisition
 {
@@ -29,14 +30,32 @@ namespace acquisition
             vCap.release();
     }
 
-    cv::Mat CameraHandler::getSingleFrame()
+    void CameraHandler::startStream(CameraWidget * caller)
     {
-        cameraMutex.lock();
-        if(vCap.isOpened())
-            vCap >> lastFrame;
-        cameraMutex.unlock();
+        for (size_t i = 0; ;i++)
+        {
+            cameraMutex.lock();
+            if (vCap.isOpened())
+                vCap >> m_lastFrame;
+            cameraMutex.unlock();
 
-        return lastFrame;
+            caller->notify();
+        }
+    }
+
+    void CameraHandler::stopStream()
+    {
+
+    }
+
+    void CameraHandler::getData(cv::Mat * frame)
+    {
+        *frame = m_lastFrame;
+    }
+    
+    bool CameraHandler::isStopped() const
+    {
+        return m_isStopped;
     }
 
 } // namespace acquisition

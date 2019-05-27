@@ -16,6 +16,7 @@ namespace acquisition
         ~CameraWidget();
 
         void startCamera();
+        void takePicture();
         void pauseCamera();
         void stopCamera();
 
@@ -24,13 +25,12 @@ namespace acquisition
         void notify();
 
     private:
-        void updateWidget();
-
+        void updateCameraImageWidget();
         void on_notificationFromWorkerThread();
 
         Glib::RefPtr<Gtk::Builder> m_builder;
         Glib::Dispatcher m_dispatcher;
-        std::thread * m_workerThread;
+        std::thread * m_workerThread = nullptr;
         CameraHandler m_cameraHandler;
     };
 

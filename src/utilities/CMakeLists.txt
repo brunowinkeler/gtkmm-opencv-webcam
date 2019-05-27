@@ -1,5 +1,5 @@
 # Set of Local Variables for location
-set(MODULE_NAME image_processing)
+set(MODULE_NAME utilities)
 set(MODULE_NAME_SRCS ${PROJECT_SOURCE_DIR}/src/${MODULE_NAME})
 
 # Include the directories that are the reference
@@ -23,8 +23,8 @@ set_property(TARGET ${MODULE_NAME} PROPERTY FOLDER "${MODULE_NAME}")
 
 # Link the libraries
 # This is CUSTOM
-target_link_libraries(${MODULE_NAME} ${GTKMM_LIBRARIES})
-target_link_libraries(${MODULE_NAME} ${OpenCV_LIBS})
+#target_link_libraries(${MODULE_NAME} ${GTKMM_LIBRARIES})
+#target_link_libraries(${MODULE_NAME} ${OpenCV_LIBS})
 
 # Define installation folders
 install(TARGETS ${MODULE_NAME}

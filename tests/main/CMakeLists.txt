@@ -4,7 +4,7 @@ set(PROJECT_SRCS ${PROJECT_SOURCE_DIR}/src)
 
 # Include the directories that are the reference
 include_directories(${PROJECT_SRCS}/acquisition/include)
-include_directories(${PROJECT_SRCS}/image_processing/include)
+include_directories(${PROJECT_SRCS}/utilities/include)
 include_directories(${TESTS_SRCS}/main/include)
 
 # Collect sources and headers into the variables
@@ -21,8 +21,8 @@ add_executable(${EXEC_NAME} ${MAIN_SOURCES} ${MAIN_HEADERS})
 
 target_link_libraries(${EXEC_NAME} optimized acquisition)
 target_link_libraries(${EXEC_NAME} debug     acquisition)
-target_link_libraries(${EXEC_NAME} optimized image_processing)
-target_link_libraries(${EXEC_NAME} debug     image_processing)
+target_link_libraries(${EXEC_NAME} optimized utilities)
+target_link_libraries(${EXEC_NAME} debug     utilities)
 
 target_link_libraries(${EXEC_NAME} ${GTKMM_LIBRARIES})
 target_link_libraries(${EXEC_NAME} ${OpenCV_LIBS})

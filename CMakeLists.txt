@@ -49,5 +49,5 @@ endif()
 
 # Adds the respective subdirectories of the project
 add_subdirectory(src/acquisition)
-add_subdirectory(src/image_processing)
+add_subdirectory(src/utilities)
 add_subdirectory(tests/main)

@@ -3,6 +3,8 @@
 
 #include <mutex>
 #include <thread>
+#include <atomic>
+
 #include <opencv2/opencv.hpp>
 
 namespace acquisition
@@ -16,18 +18,21 @@ namespace acquisition
 
         void startStream(CameraWidget * caller);
         void stopStream();
-        void getData(cv::Mat * frame);
+        void saveFrame();
+        void getData(cv::Mat & frame);
 
         bool isStopped() const;
 
-    private:    
+    private:
+
+        void initializeCamera(int camera_index);    
         cv::VideoCapture vCap;
         cv::Mat m_lastFrame;
         int cameraIndex = 0;
 
-        std::mutex cameraMutex;
+        std::mutex cameraMutex, imageMutex;
 
-        bool m_isStopped = true;
+        std::atomic<bool> m_isStopped;
     };
     
 } // namespace acquisition

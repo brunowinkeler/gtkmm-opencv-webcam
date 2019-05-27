@@ -23,9 +23,5 @@ int main(int argc, char **argv)
 
     builder->get_widget_derived("mainWindow", cameraWindow);
 
-    cameraWindow->set_size_request(640,480);
-    cameraWindow->set_default_size(800,600);
-    //cameraWindow->resize(1280,720);
-
     return app->run(*cameraWindow);
 }

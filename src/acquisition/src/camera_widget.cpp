@@ -6,9 +6,6 @@ namespace acquisition
         Gtk::Image(cobject),
         m_builder(refGlade)
     {
-        std::string path_resources = PATH_RESOURCES;
-        this->set(path_resources + "imgs/lena.png");
-
         // Connect the handler to the dispatcher.
         m_dispatcher.connect(sigc::mem_fun(*this, &CameraWidget::on_notificationFromWorkerThread));
     }
@@ -34,9 +31,28 @@ namespace acquisition
         }
     }
 
+    void CameraWidget::takePicture()
+    {
+        m_cameraHandler.saveFrame();
+    }
+
     void CameraWidget::stopCamera()
     {
+        if (!m_workerThread)
+        {
+            std::cout << "Can't stop a worker thread. None is running." << std::endl;
+        }
+        else
+        {
+            // Order the worker thread to stop.
+            m_cameraHandler.stopStream();
 
+            // Work is done.
+            if (m_workerThread->joinable())
+                m_workerThread->join();
+            delete m_workerThread;
+            m_workerThread = nullptr;
+        }
     }
 
     void CameraWidget::pauseCamera()
@@ -44,15 +60,16 @@ namespace acquisition
 
     }
 
-    void CameraWidget::updateWidget()
+    void CameraWidget::updateCameraImageWidget()
     {
-        //cv::Mat frame = m_cameraHandler.getSingleFrame();
+        cv::Mat frame;
+        m_cameraHandler.getData(frame);
 
-        // if (!frame.empty())
-        // {
-        //     this->set(Gdk::Pixbuf::create_from_data(frame.data, Gdk::COLORSPACE_RGB, false, 8, frame.cols, frame.rows, frame.step)); 
-        //     this->queue_draw();
-        // }
+        if (!frame.empty())
+        {
+            this->set(Gdk::Pixbuf::create_from_data(frame.data, Gdk::COLORSPACE_RGB, false, 8, frame.cols, frame.rows, frame.step)); 
+            this->queue_draw();
+        }
     }
     
     void CameraWidget::notify()
@@ -62,7 +79,15 @@ namespace acquisition
 
     void CameraWidget::on_notificationFromWorkerThread()
     {
-
+        if (m_workerThread && m_cameraHandler.isStopped())
+        {
+            // Work is done.
+            if (m_workerThread->joinable())
+                m_workerThread->join();
+            delete m_workerThread;
+            m_workerThread = nullptr;
+        }
+        updateCameraImageWidget();
     }
 
 } // namespace acquisition

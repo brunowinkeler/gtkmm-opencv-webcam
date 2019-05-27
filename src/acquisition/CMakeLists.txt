@@ -2,8 +2,11 @@
 set(MODULE_NAME acquisition)
 set(MODULE_NAME_SRCS ${PROJECT_SOURCE_DIR}/src/${MODULE_NAME})
 
+set(UTILS_DIR ${PROJECT_SOURCE_DIR}/src/utilities)
+
 # Include the directories that are the reference
 include_directories(${MODULE_NAME_SRCS}/include)
+include_directories(${UTILS_DIR}/include)
 
 # Collect sources and headers into the variables
 file(GLOB MODULE_HEADERS 

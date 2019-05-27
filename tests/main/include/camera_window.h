@@ -22,17 +22,17 @@ private:
 
     //Private Slots
     void on_btStartPauseClicked();
+    void on_btStopClicked();
     void on_btCloseClicked();
     void on_btPicClicked();
 
     //Private Attributes
     Glib::RefPtr<Gtk::Builder> m_builder;
 	Gtk::Button * m_startPauseButton;
+	Gtk::Button * m_stopButton;
 	Gtk::Button * m_closeButton;
 	Gtk::Button * m_takePicButton;
-	acquisition::CameraWidget *drawingImage;
-
-    std::mutex m_mutCamera, m_mutImage;
+	acquisition::CameraWidget * m_cameraImage;
 };
 
 #endif // CAMERA_WINDOW_H
